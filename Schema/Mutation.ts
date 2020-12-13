@@ -43,7 +43,7 @@ const mutation = new GraphQLObjectType({
     logout: {
       type: UserType,
       async resolve(parent, args, ctx: Request) {
-        const user = await User.findById(ctx.session.user._id);
+        const user = ctx.session.user;
         ctx.session.destroy(err => console.log(err));
         return user;
       }

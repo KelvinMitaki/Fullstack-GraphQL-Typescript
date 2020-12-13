@@ -14,16 +14,25 @@ interface UserModel extends mongoose.Model<UserDoc> {
   build: (attrs: UserAttrs) => UserDoc;
 }
 
-const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    }
   },
-  password: {
-    type: String,
-    required: true
+  {
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.password;
+      }
+    }
   }
-});
+);
 
 UserSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
