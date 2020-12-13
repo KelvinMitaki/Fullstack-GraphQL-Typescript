@@ -11,7 +11,7 @@ import { UserType } from "./User";
 
 declare module "express-session" {
   export interface Session {
-    user: { email: string; _id: string };
+    user?: { email: string; _id: string };
   }
 }
 
@@ -37,6 +37,25 @@ const mutation = new GraphQLObjectType({
         await user.save();
         // @ts-ignore
         ctx.session.user = user;
+        return user;
+      }
+    },
+    login: {
+      type: UserType,
+      args: {
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      async resolve(parent, args, ctx: Request) {
+        const user = await User.findOne({ email: args.email });
+        if (!user) {
+          throw new Error("Invalid email or password");
+        }
+        const isMatch = await bcrypt.compare(args.password, user.password);
+        if (!isMatch) {
+          throw new Error("Invalid email or password");
+        }
+        ctx.session.user = user as typeof ctx.session.user;
         return user;
       }
     },
