@@ -1,4 +1,6 @@
+import { Request } from "express";
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
+import { User } from "../model/User";
 import { UserType } from "./User";
 
 const mutation = new GraphQLObjectType({
@@ -10,7 +12,16 @@ const mutation = new GraphQLObjectType({
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) }
       },
-      resolve(parent, args, ctx) {}
+      async resolve(parent, args, ctx: Request) {
+        const user = User.build({
+          email: args.email,
+          password: args.password
+        });
+        await user.save();
+        // @ts-ignore
+        ctx.session.user = user;
+        return user;
+      }
     }
   }
 });
