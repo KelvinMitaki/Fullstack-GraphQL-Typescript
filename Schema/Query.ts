@@ -1,4 +1,5 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
+import { User } from "../model/User";
 import { UserType } from "./User";
 
 const RootQuery = new GraphQLObjectType({
@@ -9,11 +10,9 @@ const RootQuery = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLString) }
       },
-      resolve(parent, args, ctx, info) {
-        return {
-          email: "kevin@gmail.com",
-          password: "kevinmitaki"
-        };
+      async resolve(parent, args, ctx, info) {
+        const user = await User.findOne({ _id: args.id });
+        return user;
       }
     }
   }
