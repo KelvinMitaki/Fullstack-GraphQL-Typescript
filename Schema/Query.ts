@@ -11,8 +11,6 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parent, args, ctx, info) {
         return {
-          firstName: "Kelvin",
-          lastName: "mitaki",
           email: "kevin@gmail.com",
           password: "kevinmitaki"
         };
