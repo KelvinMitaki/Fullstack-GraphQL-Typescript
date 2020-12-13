@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { UserType } from "./User";
 
 const RootQuery = new GraphQLObjectType({
@@ -7,7 +7,7 @@ const RootQuery = new GraphQLObjectType({
     user: {
       type: UserType,
       args: {
-        id: { type: GraphQLString }
+        id: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args, ctx, info) {
         return {
