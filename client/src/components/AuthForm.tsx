@@ -4,6 +4,8 @@ import styles from "./AuthForm.module.css";
 interface Props {
   onLoginSubmit?: (data: { email: string; password: string }) => void;
   onSignupSubmit?: (data: { email: string; password: string }) => void;
+  error?: string;
+  setError?: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const AuthForm: React.FC<Props> = props => {
@@ -20,6 +22,7 @@ const AuthForm: React.FC<Props> = props => {
   return (
     <div>
       <form className={styles.form} onSubmit={onSubmit}>
+        <p style={{ color: "red" }}>{props.error}</p>
         <div>
           <input
             type="text"
@@ -27,6 +30,9 @@ const AuthForm: React.FC<Props> = props => {
             value={email}
             placeholder="email"
             id="email"
+            onFocus={() =>
+              props.error && props.setError && props.setError(undefined)
+            }
           />
         </div>
         <div>
@@ -36,6 +42,9 @@ const AuthForm: React.FC<Props> = props => {
             value={password}
             placeholder="password"
             id="password"
+            onFocus={() =>
+              props.error && props.setError && props.setError(undefined)
+            }
           />
         </div>
         <button type="submit">Submit</button>
