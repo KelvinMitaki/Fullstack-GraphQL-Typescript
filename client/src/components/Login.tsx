@@ -4,7 +4,7 @@ import AuthForm from "./AuthForm";
 const Login = () => {
   return (
     <div>
-      <p>Login</p>
+      <h2>Login</h2>
       <AuthForm />
     </div>
   );

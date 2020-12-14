@@ -12,6 +12,7 @@
   outline: none;
   padding: 10px 0;
   transition: all 0.2s;
+  width: 70vw;
 }
 
 .form input:focus {
@@ -23,8 +24,8 @@
   text-transform: uppercase;
   background-color: rgb(0, 128, 128);
   color: #fff;
-  padding: 10px 15px;
-  border-radius: 2px;
+  padding: 10px 25px;
+  border-radius: 3px;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
   transition: all 0.2s;
 }
