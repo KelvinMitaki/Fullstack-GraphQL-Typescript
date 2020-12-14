@@ -10,6 +10,7 @@ const Header: React.FC<RouteComponentProps> = props => {
     currentUser
   );
   const [logout] = useMutation(logoutUser, {
+    awaitRefetchQueries: true,
     onCompleted: data => props.history.push("/login")
   });
   if (loading) {

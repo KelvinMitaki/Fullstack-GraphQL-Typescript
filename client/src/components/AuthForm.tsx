@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import styles from "./AuthForm.module.css";
 
-const AuthForm = () => {
+interface Props {
+  onLoginSubmit?: (data: { email: string; password: string }) => void;
+  onSignupSubmit?: (data: { email: string; password: string }) => void;
+}
+
+const AuthForm: React.FC<Props> = props => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (props.onLoginSubmit) {
+      props.onLoginSubmit({ email, password });
+      setEmail("");
+      setPassword("");
+    }
+  };
   return (
     <div>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <div>
           <input
             type="text"
@@ -18,7 +31,7 @@ const AuthForm = () => {
         </div>
         <div>
           <input
-            type="text"
+            type="password"
             onChange={e => setPassword(e.target.value)}
             value={password}
             placeholder="password"
