@@ -1,13 +1,17 @@
 import React from "react";
-import { useQuery } from "react-apollo";
+import { useMutation, useQuery } from "react-apollo";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { currentUser } from "../queries/currentUser";
+import { logoutUser } from "../queries/logoutUser";
 import styles from "./Header.module.css";
 
 const Header: React.FC<RouteComponentProps> = props => {
   const { data, loading } = useQuery<{ user?: { email: string; _id: string } }>(
     currentUser
   );
+  const [logout] = useMutation(logoutUser, {
+    onCompleted: data => props.history.push("/login")
+  });
   if (loading) {
     console.log({ loading });
     return null;
@@ -18,7 +22,11 @@ const Header: React.FC<RouteComponentProps> = props => {
         <h2 onClick={() => props.history.push("/")}>Home</h2>
         <div className={styles.login}>
           <p>Hello {data.user.email}</p>
-          <button>Logout</button>
+          <button
+            onClick={() => logout({ refetchQueries: [{ query: currentUser }] })}
+          >
+            Logout
+          </button>
         </div>
       </div>
     );
