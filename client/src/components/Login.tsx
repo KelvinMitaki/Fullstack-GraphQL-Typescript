@@ -1,3 +1,5 @@
+import { ApolloError } from "apollo-boost";
+import { GraphQLError } from "graphql";
 import React, { useState } from "react";
 import { useMutation } from "react-apollo";
 import { RouteComponentProps } from "react-router-dom";
@@ -6,13 +8,13 @@ import { loginUser } from "../queries/loginUser";
 import AuthForm from "./AuthForm";
 
 const Login: React.FC<RouteComponentProps> = props => {
-  const [error, setError] = useState<string | undefined>();
+  const [error, setError] = useState<readonly GraphQLError[] | undefined>();
   const [login] = useMutation(loginUser, {
     awaitRefetchQueries: true,
     onCompleted: data => {
       props.history.push("/");
     },
-    onError: err => setError(err.graphQLErrors[0].message)
+    onError: err => setError(err.graphQLErrors)
   });
   const onLoginSubmit = async (data: { email: string; password: string }) => {
     const res = await login({

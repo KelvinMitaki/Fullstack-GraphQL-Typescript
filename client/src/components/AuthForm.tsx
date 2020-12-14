@@ -1,11 +1,14 @@
+import { GraphQLError } from "graphql";
 import React, { useState } from "react";
 import styles from "./AuthForm.module.css";
 
 interface Props {
   onLoginSubmit?: (data: { email: string; password: string }) => void;
   onSignupSubmit?: (data: { email: string; password: string }) => void;
-  error?: string;
-  setError?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  error?: readonly GraphQLError[];
+  setError?: React.Dispatch<
+    React.SetStateAction<readonly GraphQLError[] | undefined>
+  >;
 }
 
 const AuthForm: React.FC<Props> = props => {
@@ -22,7 +25,12 @@ const AuthForm: React.FC<Props> = props => {
   return (
     <div>
       <form className={styles.form} onSubmit={onSubmit}>
-        <p style={{ color: "red" }}>{props.error}</p>
+        {props.error &&
+          props.error.map(err => (
+            <p style={{ color: "red" }} key={err.message}>
+              {err.message}
+            </p>
+          ))}
         <div>
           <input
             type="text"
