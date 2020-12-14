@@ -5,17 +5,13 @@ import { currentUser } from "../queries/currentUser";
 import { logoutUser } from "./mutations/logoutUser";
 import styles from "./Header.module.css";
 
+export interface User {
+  email: string;
+  _id: string;
+}
+
 interface Props extends RouteComponentProps {
-  data:
-    | {
-        user?:
-          | {
-              email: string;
-              _id: string;
-            }
-          | undefined;
-      }
-    | undefined;
+  data: { user?: User } | undefined;
   loading: boolean;
 }
 
