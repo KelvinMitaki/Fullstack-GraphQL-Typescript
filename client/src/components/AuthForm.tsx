@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import styles from "./AuthForm.module.css";
 
 interface Props {
-  onLoginSubmit?: (data: { email: string; password: string }) => void;
-  onSignupSubmit?: (data: { email: string; password: string }) => void;
+  onSubmit?: (data: { email: string; password: string }) => void;
   error?: readonly GraphQLError[];
   setError?: React.Dispatch<
     React.SetStateAction<readonly GraphQLError[] | undefined>
@@ -16,8 +15,8 @@ const AuthForm: React.FC<Props> = props => {
   const [password, setPassword] = useState<string>("");
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (props.onLoginSubmit) {
-      props.onLoginSubmit({ email, password });
+    if (props.onSubmit) {
+      props.onSubmit({ email, password });
       setEmail("");
       setPassword("");
     }

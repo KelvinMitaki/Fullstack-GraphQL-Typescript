@@ -2,7 +2,7 @@ import React from "react";
 import { useMutation, useQuery } from "react-apollo";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { currentUser } from "../queries/currentUser";
-import { logoutUser } from "../queries/logoutUser";
+import { logoutUser } from "./mutations/logoutUser";
 import styles from "./Header.module.css";
 
 const Header: React.FC<RouteComponentProps> = props => {
