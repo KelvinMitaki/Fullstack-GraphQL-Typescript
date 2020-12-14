@@ -34,7 +34,7 @@ const Header: React.FC<RouteComponentProps> = props => {
   return (
     <div className={styles.header}>
       <h2 onClick={() => props.history.push("/")}>Home</h2>
-      <div>
+      <div className={styles.login}>
         <button onClick={() => props.history.push("/signup")}>Sign Up</button>
         <button onClick={() => props.history.push("/login")}>Login</button>
       </div>
