@@ -5,22 +5,31 @@ import { currentUser } from "../queries/currentUser";
 import styles from "./Header.module.css";
 
 const Header: React.FC<RouteComponentProps> = props => {
-  const { data, loading } = useQuery(currentUser);
+  const { data, loading } = useQuery<{ user?: { email: string; _id: string } }>(
+    currentUser
+  );
   if (loading) {
     console.log({ loading });
+    return null;
   }
   if (data && data.user) {
     return (
       <div className={styles.header}>
         <h2 onClick={() => props.history.push("/")}>Home</h2>
-        <div>{JSON.stringify(data.user, null, 4)}</div>
+        <div className={styles.login}>
+          <p>Hello {data.user.email}</p>
+          <button>Logout</button>
+        </div>
       </div>
     );
   }
   return (
     <div className={styles.header}>
       <h2 onClick={() => props.history.push("/")}>Home</h2>
-      <div>You are not logged in</div>
+      <div>
+        <button>Sign Up</button>
+        <button>Login</button>
+      </div>
     </div>
   );
 };
