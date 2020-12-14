@@ -1,7 +1,11 @@
 import React from "react";
-
-const HomePage = () => {
+import { User } from "./Header";
+import requireAuth from "./requireAuth";
+interface Props {
+  data: { user?: User } | undefined;
+}
+const HomePage: React.FC<Props> = props => {
   return <div>Root component</div>;
 };
 
-export default HomePage;
+export default requireAuth(HomePage);

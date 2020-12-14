@@ -15,7 +15,7 @@ function App() {
       <Header data={data} loading={loading} />
       <Route path="/signup" exact render={() => <Signup data={data} />} />
       <Route path="/login" exact render={() => <Login data={data} />} />
-      <Route path="/" exact component={HomePage} />
+      <Route path="/" exact render={() => <HomePage data={data} />} />
     </div>
   );
 }
