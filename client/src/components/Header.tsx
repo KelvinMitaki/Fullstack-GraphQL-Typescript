@@ -27,8 +27,8 @@ const Header: React.FC<RouteComponentProps> = props => {
     <div className={styles.header}>
       <h2 onClick={() => props.history.push("/")}>Home</h2>
       <div>
-        <button>Sign Up</button>
-        <button>Login</button>
+        <button onClick={() => props.history.push("/signup")}>Sign Up</button>
+        <button onClick={() => props.history.push("/login")}>Login</button>
       </div>
     </div>
   );
