@@ -4,13 +4,17 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import ApolloClient, { InMemoryCache } from "apollo-boost";
+import { InMemoryCache, HttpLink, ApolloClient } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter } from "react-router-dom";
+const link = new HttpLink({
+  uri: "http://localhost:4000/graphql",
+  credentials: "include"
+});
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  link
 });
 ReactDOM.render(
   <React.StrictMode>
