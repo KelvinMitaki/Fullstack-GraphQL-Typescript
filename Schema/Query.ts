@@ -1,3 +1,4 @@
+import { Request } from "express";
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { User } from "../model/User";
 import { UserType } from "./User";
@@ -7,12 +8,8 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     user: {
       type: UserType,
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLString) }
-      },
-      async resolve(parent, args, ctx, info) {
-        const user = await User.findOne({ _id: args.id });
-        return user;
+      async resolve(parent, args, ctx: Request, info) {
+        return ctx.session.user;
       }
     }
   }

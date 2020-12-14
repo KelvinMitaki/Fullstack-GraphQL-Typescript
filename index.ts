@@ -4,6 +4,7 @@ import session from "express-session";
 import connectMongo from "connect-mongo";
 import { graphqlHTTP } from "express-graphql";
 import { schema } from "./Schema";
+import cors from "cors";
 
 const app = express();
 
@@ -31,6 +32,9 @@ const sessionStore = new MongoStore({
   url: process.env.MONGO_URI,
   autoReconnect: true
 });
+
+// @ts-ignore
+app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(
   session({
